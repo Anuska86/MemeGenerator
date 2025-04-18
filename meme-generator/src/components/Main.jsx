@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 export default function Main() {
   const [meme, setMeme] = useState({
@@ -6,6 +6,19 @@ export default function Main() {
     bottomText: "Walk into Mordor",
     imageUrl: "http://i.imgflip.com/1bij.jpg",
   });
+
+  const [allMemes, setAllMemes] = useState([]);
+
+  useEffect(() => {
+    fetch("https://api.imgflip.com/get_memes")
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          setAllMemes(data.data.memes); // Save the array of memes to state
+        }
+      })
+      .catch((error) => console.error("Error fetching memes:", error));
+  }, []); // Empty dependency array ensures this runs only once
 
   function handleChange(event) {
     const { name, value } = event.currentTarget;

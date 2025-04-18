@@ -14,11 +14,11 @@ export default function Main() {
       .then((response) => response.json())
       .then((data) => {
         if (data.success) {
-          setAllMemes(data.data.memes); // Save the array of memes to state
+          setAllMemes(data.data.memes); 
         }
       })
       .catch((error) => console.error("Error fetching memes:", error));
-  }, []); // Empty dependency array ensures this runs only once
+  }, []); 
 
   function handleChange(event) {
     const { name, value } = event.currentTarget;

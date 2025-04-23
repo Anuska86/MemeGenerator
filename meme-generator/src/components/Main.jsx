@@ -14,11 +14,11 @@ export default function Main() {
       .then((response) => response.json())
       .then((data) => {
         if (data.success) {
-          setAllMemes(data.data.memes); 
+          setAllMemes(data.data.memes);
         }
       })
       .catch((error) => console.error("Error fetching memes:", error));
-  }, []); 
+  }, []);
 
   function handleChange(event) {
     const { name, value } = event.currentTarget;
@@ -26,6 +26,17 @@ export default function Main() {
       ...prevMeme,
       [name]: value,
     }));
+  }
+
+  function getRandomMemeImage() {
+    const randomIndex = Math.floor(Math.random() * allMemes.length); //get a random index or number from 0 to the length of allMemes array
+    const randomMeme = allMemes[randomIndex];
+    if (randomMeme) {
+      setMeme((prevMeme) => ({
+        ...prevMeme,
+        imageUrl: randomMeme.url,
+      }));
+    }
   }
 
   return (
@@ -52,7 +63,7 @@ export default function Main() {
             onChange={handleChange}
           />
         </label>
-        <button>Get a new meme image 🖼</button>
+        <button onClick={getRandomMemeImage}>Get a new meme image 🖼</button>
       </div>
       <div className="meme">
         <img src={meme.imageUrl} alt="Meme" />
